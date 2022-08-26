@@ -31,6 +31,17 @@ function push_stop_command(delta_t, command)
 	push_command(stop_sequence_full,t_stop, command)
 end
 
+function clear_mfd_page(mfd, osb)
+	push_stop_command(dt, {device = mfd, action = osb, value = 1.0})
+	push_stop_command(dt, {device = mfd, action = osb, value = 1.0})
+	push_stop_command(dt, {device = mfd, action = mfd_commands.OSB_1, value = 1.0})
+end
+
+function press_rel(dev, button)
+	push_stop_command(dt, {device = devices.UFC, 	action = button, value = 1.0})
+	push_stop_command(dt, {device = devices.UFC, 	action = button, value = -1.0})
+end
+
 --
 local count = 0
 local function counter()
@@ -89,6 +100,7 @@ alert_messages[F16_AD_RIGHT_HDPT_CHECK_RDY]		= { message = "",											message
 ----------------------------------------------------------------------------------------------------
 -- Start sequence
 push_start_command(2.0,	{message = _("FIRST SEQUENCE IS RUNNING"),	message_timeout = stop_sequence_time})
+--dofile(LockOn_Options.script_path.."test.lua")
 push_start_command(dt,	{message = _("COMPLETE"),	message_timeout = std_message_timeout})
 --
 
@@ -108,8 +120,8 @@ push_stop_command(dt,		{device = devices.EXTLIGHTS_SYSTEM,		action = extlights_c
 
 -- Enable ECM
 push_stop_command(dt, 		{message = _("- ENABLE ECM"), 				message_timeout = 1 + dt_mto})
-push_stop_command(dt, 		{device = devices.ECM_INTERFACE, 		action = ecm_commands.PwrSw, 		value = 0.1})
-push_stop_command(dt, 		{device = devices.ECM_INTERFACE, 		action = ecm_commands.XmitSw, 		value = 0.1})
+push_stop_command(dt, 		{device = devices.ECM_INTERFACE, 		action = ecm_commands.PwrSw, 		value = 1.0})
+push_stop_command(dt, 		{device = devices.ECM_INTERFACE, 		action = ecm_commands.XmitSw, 		value = -1.0})
 push_stop_command(dt, 		{device = devices.ECM_INTERFACE, 		action = ecm_commands.OneBtn, 		value = 1.0})
 push_stop_command(dt, 		{device = devices.ECM_INTERFACE, 		action = ecm_commands.TwoBtn, 		value = 1.0})
 push_stop_command(dt, 		{device = devices.ECM_INTERFACE, 		action = ecm_commands.ThreeBtn, 	value = 1.0})
@@ -126,7 +138,7 @@ push_stop_command(dt,		{device = devices.CMDS,					action = cmds_commands.RwrSrc
 push_stop_command(dt,		{device = devices.CMDS,					action = cmds_commands.JmrSrc,		value = 1.0})
 push_stop_command(dt,		{device = devices.CMDS,					action = cmds_commands.ChExp,		value = 1.0})
 push_stop_command(dt,		{device = devices.CMDS,					action = cmds_commands.FlExp,		value = 1.0})
-push_stop_command(dt,		{device = devices.CMDS,					action = cmds_commands.Mode, 		value = 0.3})
+push_stop_command(dt,		{device = devices.CMDS,					action = cmds_commands.Mode, 		value = 0.2})
 
 -- HMCS on
 push_stop_command(dt,		{message = _("- HMCS SYMBOLOGY INT POWER KNOB - INT"),									message_timeout = dt_mto})
@@ -168,9 +180,27 @@ push_stop_command(dt, 		{device = devices.MFD_RIGHT, 			action = mfd_commands.OS
 -- exit overrides
 push_stop_command(dt, 		{device = devices.HOTAS, 				action = hotas_commands.THROTTLE_DOG_FIGHT, value = 0.0})
 
+-- clear pages on nav
+clear_mfd_page(devices.MFD_LEFT, mfd_commands.OSB_12)
+clear_mfd_page(devices.MFD_LEFT, mfd_commands.OSB_13)
+push_stop_command(dt, {device = devices.MFD_LEFT, action = mfd_commands.OSB_14, value = 1.0})
+
+-- clear pages on AA
+press_rel(devices.UFC, ufc_commands.AA)
+clear_mfd_page(devices.MFD_LEFT, mfd_commands.OSB_12)
+clear_mfd_page(devices.MFD_LEFT, mfd_commands.OSB_13)
+push_stop_command(dt, {device = devices.MFD_LEFT, action = mfd_commands.OSB_14, value = 1.0})
+
+-- clear pages on AG
+press_rel(devices.UFC, ufc_commands.AG)
+clear_mfd_page(devices.MFD_LEFT, mfd_commands.OSB_12)
+clear_mfd_page(devices.MFD_LEFT, mfd_commands.OSB_13)
+push_stop_command(dt, {device = devices.MFD_LEFT, action = mfd_commands.OSB_14, value = 1.0})
+press_rel(devices.UFC, ufc_commands.AG)
+
 -- bullseye enable
 push_stop_command(dt, 		{message = _("- ENABLE BULLSEYE"), 				message_timeout = 1 + dt_mto})
-push_stop_command(dt, 		{device = devices.UFC, 			action = ufc_commands.LIST, 		value = 1.0})
+press_rel(devices.UFC, ufc_commands.LIST)
 push_stop_command(dt, 		{device = devices.UFC, 			action = ufc_commands.DIG0_M_SEL, 		value = 1.0})
 push_stop_command(dt, 		{device = devices.UFC, 			action = ufc_commands.DIG8_FIX, 		value = 1.0})
 push_stop_command(dt, 		{device = devices.UFC, 			action = ufc_commands.DIG0_M_SEL, 		value = 1.0})
@@ -184,7 +214,8 @@ push_stop_command(dt, 		{device = devices.UFC, 			action = ufc_commands.DCS_DOWN
 push_stop_command(dt, 		{device = devices.UFC, 			action = ufc_commands.DIG0_M_SEL, 		value = 1.0})
 
 -- return ICP
-push_stop_command(dt, 		{device = devices.UFC, 			action = ufc_commands.DCS_RTN, 		value = 1.0})
+push_stop_command(dt, 		{device = devices.UFC, 			action = ufc_commands.DCS_RTN, 		value = -1.0})
+push_stop_command(dt, 		{device = devices.UFC, 			action = ufc_commands.DCS_RTN, 		value = 0.0})
 
 -- Power intake hardpoints and FCR
 push_stop_command(dt, 		{message = _("- POWER INTAKE HARDPOINTS"), 				message_timeout = 1 + dt_mto})
@@ -195,6 +226,7 @@ push_stop_command(dt,		{device = devices.FCR,					action = fcr_commands.PwrSw,		
 -- Fuel Qty sel centerline
 push_stop_command(dt, 		{message = _("- CENTERLINE FUEL GAUGE"), 				message_timeout = 1 + dt_mto})
 push_stop_command(dt,		{device = devices.FUEL_INTERFACE,			action = fuel_commands.FuelQtySelSw,				value = 0.5})
+
 
 --
 push_stop_command(dt,	{message = _("FENCE IN COMPLETE"),message_timeout = std_message_timeout})
