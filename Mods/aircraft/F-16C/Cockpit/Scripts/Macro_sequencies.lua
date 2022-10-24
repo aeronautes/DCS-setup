@@ -180,7 +180,6 @@ push_stop_command(dt, {device = devices.HOTAS, action = hotas_commands.THROTTLE_
 -- add HSD
 push_stop_command(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_13, value = 1.0})
 push_stop_command(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_13, value = 1.0})
---set_mfd_page(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_13, value = 1.0})
 push_stop_command(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_7, value = 1.0})
 push_stop_command(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_2, value = 1.0})
 -- XMT L16
@@ -188,7 +187,6 @@ push_stop_command(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_6,
 -- add TGP
 push_stop_command(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_12, value = 1.0})
 push_stop_command(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_12, value = 1.0})
---set_mfd_page(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_12, value = 1.0})
 push_stop_command(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_19, value = 1.0})
 push_stop_command(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_13, value = 1.0})
 
@@ -197,12 +195,10 @@ push_stop_command(dt, {device = devices.HOTAS, action = hotas_commands.THROTTLE_
 -- add HSD
 push_stop_command(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_13, value = 1.0})
 push_stop_command(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_13, value = 1.0})
---set_mfd_page(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_13, value = 1.0})
 push_stop_command(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_7, value = 1.0})
 -- add TGP
 push_stop_command(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_12, value = 1.0})
 push_stop_command(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_12, value = 1.0})
---set_mfd_page(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_12, value = 1.0})
 push_stop_command(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_19, value = 1.0})
 push_stop_command(dt, {device = devices.MFD_RIGHT, 	action = mfd_commands.OSB_13, value = 1.0})
 -- exit overrides
@@ -240,15 +236,6 @@ push_stop_command(dt, {device = devices.MFD_LEFT, action = mfd_commands.OSB_12, 
 push_stop_command(dt, {device = devices.MFD_LEFT, action = mfd_commands.OSB_12, value = 1.0})
 push_stop_command(dt, {device = devices.MFD_LEFT, action = mfd_commands.OSB_19, value = 1.0})
 
---[[set_mfd_page(dt, {device = devices.MFD_LEFT, action = mfd_commands.OSB_12, value = 1.0})
-push_stop_command(dt, {device = devices.MFD_LEFT, action = mfd_commands.OSB_19, value = 1.0})
-set_mfd_page(dt, {device = devices.MFD_LEFT, action = mfd_commands.OSB_13, value = 1.0})
-push_stop_command(dt, {device = devices.MFD_LEFT, action = mfd_commands.OSB_2, value = 1.0})
-clear_mfd_page(devices.MFD_LEFT, mfd_commands.OSB_14)
---
-set_mfd_page(dt, {device = devices.MFD_RIGHT, action = mfd_commands.OSB_12, value = 1.0})
-push_stop_command(dt, {device = devices.MFD_RIGHT, action = mfd_commands.OSB_18, value = 1.0})
---]]
 -- WPN page
 push_stop_command(dt, {device = devices.MFD_RIGHT, action = mfd_commands.OSB_12, value = 1.0})
 push_stop_command(dt, {device = devices.MFD_RIGHT, action = mfd_commands.OSB_12, value = 1.0})
