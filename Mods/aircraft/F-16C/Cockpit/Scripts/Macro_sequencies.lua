@@ -111,27 +111,7 @@ push_start_command(2.0,	{message = _("MACRO 1"), message_timeout = std_message_t
 --common = Scripts/Aircrafts/_Common/Cockpit/
 dofile(lfs.writedir() .. "Scratchpad\\macro.txt")
 
---local fpath = lfs.writedir() .. "Scratchpad\\macro.txt"
---local mac = loadfile(fpath)
---mac()
 
---[[
-	--local fpath = lfs.writedir() .. "Scratchpad\\macro.txt"
-	file, err = io.open(lfs.writedir() .. "Scratchpad\\macro.txt", "r")
-    if err then
-    	log("Error reading file: " .. fpath)
-       	return ""
-    else
-    	local fn = file:read("*all")
-       	file:close()
-		fn = lfs.writedir() .. "Scratchpad\\" .. fn
-		push_start_command(dt,	{message = _(fn), message_timeout = std_message_timeout})
-		--if fn then
-		dofile(fn)
-		--end
-		fn = nil
-	end
---]]	
 push_start_command(dt,	{message = _("MACRO 1 END"), message_timeout = std_message_timeout})
 --
 
